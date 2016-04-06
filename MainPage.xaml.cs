@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -43,5 +44,26 @@ namespace harjoitustyo
             playerName = PlayerNameTextBox.Text;
         }
 
+        private void HighscoresButton_Copy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            HighscoresStackPanel.Visibility = Visibility.Collapsed;
+            NewGameStackPanel.Visibility = Visibility.Visible;
+        }
+
+        private void HighscoresButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewGameStackPanel.Visibility = Visibility.Collapsed;
+            HighscoresStackPanel.Visibility = Visibility.Visible;
+        }
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            CoreApplication.Exit();
+        }
     }
 }

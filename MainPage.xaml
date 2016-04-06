@@ -8,8 +8,99 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="PlayButton" Content="Start Game!" HorizontalAlignment="Left" Margin="180,253,0,0" VerticalAlignment="Top" Click="PlayButton_Click" Height="71" Width="218"/>
-        <TextBox x:Name="PlayerNameTextBox" HorizontalAlignment="Left" Margin="180,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Player"/>
-        <Button x:Name="PlayerNameButton" Content="Set Name" HorizontalAlignment="Left" Margin="313,50,0,0" VerticalAlignment="Top" Click="PlayerNameButton_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="47*"/>
+            <ColumnDefinition Width="593*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button
+            x:Name="NewGameButton"
+            Content="New Game"
+            HorizontalAlignment="Left"
+            Margin="35,127,0,0"
+            VerticalAlignment="Top"
+            Height="37"
+            Width="114"
+            Grid.Column="1"
+            Click="NewGameButton_Click"/>
+        <Button
+            x:Name="HighscoresButton"
+            Content="Highscores"
+            HorizontalAlignment="Left"
+            Margin="35,172,0,0"
+            VerticalAlignment="Top"
+            Height="37"
+            Width="114"
+            Grid.Column="1"
+            Click="HighscoresButton_Click"/>
+        <Button
+            x:Name="QuitButton"
+            Content="Quit Game"
+            HorizontalAlignment="Left"
+            Margin="35,217,0,0"
+            VerticalAlignment="Top"
+            Height="37"
+            Width="114"
+            Grid.Column="1" Click="QuitButton_Click"/>
+
+
+        <StackPanel
+            x:Name="NewGameStackPanel"
+            HorizontalAlignment="Left"
+            Height="242"
+            Margin="293,60,0,0"
+            VerticalAlignment="Top"
+            Width="147"
+            Grid.Column="1"
+            Visibility="Visible">
+
+            <TextBox
+                x:Name="PlayerNameTextBox"
+                HorizontalAlignment="Left"
+                Margin="10,10,0,0"
+                TextWrapping="Wrap"
+                Text=""
+                VerticalAlignment="Top"
+                PlaceholderText="Player"
+                Width="100"
+                Height="35"/>
+            <Button
+                x:Name="PlayerNameButton"
+                Content="Set Name"
+                HorizontalAlignment="Left"
+                Margin="10,10,0,0"
+                Width="100"
+                Height="35"
+                VerticalAlignment="Top"
+                Click="PlayerNameButton_Click" />
+            <Button
+                x:Name="PlayButton"
+                Content="Start Game!"
+                HorizontalAlignment="Left"
+                Margin="10,40,0,0"
+                VerticalAlignment="Top"
+                Click="PlayButton_Click"
+                Height="35"
+                Width="100"/>
+        
+        </StackPanel>
+
+        <StackPanel
+            x:Name="HighscoresStackPanel"
+            HorizontalAlignment="Left"
+            Height="242"
+            Margin="293,60,0,0"
+            VerticalAlignment="Top"
+            Width="147"
+            Grid.Column="1"
+            Visibility="Collapsed">
+
+            <TextBlock
+                x:Name="HighscoresTextBlock"
+                TextWrapping="Wrap"
+                Text="TextBlock"/>
+
+        </StackPanel>
+
     </Grid>
 </Page>
