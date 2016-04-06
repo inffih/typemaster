@@ -25,8 +25,6 @@ namespace harjoitustyo
     {
 
         public string playerName = "Player";
-        public int roundTime = 30;
-
 
         public MainPage()
         {
@@ -45,9 +43,5 @@ namespace harjoitustyo
             playerName = PlayerNameTextBox.Text;
         }
 
-        private void RoundTimeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
     }
 }

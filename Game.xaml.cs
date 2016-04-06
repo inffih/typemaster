@@ -39,6 +39,7 @@ namespace harjoitustyo
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            // get player's name from mainpage and set it to player object
             string playerName = e.Parameter.ToString();
             player.PlayerName = playerName;
             PlayerNameTextBox.Text = player.PlayerName;
@@ -52,6 +53,7 @@ namespace harjoitustyo
             UpdateScore();
             loadNewWord();
 
+            // timer for round time
             timer = new DispatcherTimer();
             timer.Tick += Timer_Tick;
             timer.Interval = new TimeSpan(0, 0, 1);
@@ -65,7 +67,7 @@ namespace harjoitustyo
 
         private void Timer_Tick(object sender, object e)
         {
-
+            // check if still time left or if gameover
             CountDownTextBox.Text = (RoundTime - stopwatch.Elapsed.Seconds).ToString();
             if ( (RoundTime - stopwatch.Elapsed.Seconds) <= 0)
             {
@@ -94,10 +96,10 @@ namespace harjoitustyo
             pressedKey = args.VirtualKey.ToString();
             keyPressIndex++;
 
-            
-
+           // check if correct key is pressed
             if (pressedKey == currentWord[keyPressIndex - 1].ToString())
             {
+                // if word is complete, draw new word and update score
                 if (keyPressIndex < currentWord.Length)
                 {
                     createTextBox(pressedKey);
@@ -112,6 +114,7 @@ namespace harjoitustyo
                     UpdateScore();      
                 } 
             }
+            // if wrong key is pressed clear word and update score
             else
             {
                 PressedKeysStackPanel.Children.Clear();
@@ -125,6 +128,7 @@ namespace harjoitustyo
         {
             PlayerScoreTextBox.Text = player.PlayerScore.ToString();
         }
+
         private void createTextBox(string keyToPrint)
         {
             TextBox txt = new TextBox();

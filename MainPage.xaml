@@ -11,11 +11,5 @@
         <Button x:Name="PlayButton" Content="Start Game!" HorizontalAlignment="Left" Margin="180,253,0,0" VerticalAlignment="Top" Click="PlayButton_Click" Height="71" Width="218"/>
         <TextBox x:Name="PlayerNameTextBox" HorizontalAlignment="Left" Margin="180,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Player"/>
         <Button x:Name="PlayerNameButton" Content="Set Name" HorizontalAlignment="Left" Margin="313,50,0,0" VerticalAlignment="Top" Click="PlayerNameButton_Click"/>
-        <ComboBox x:Name="RoundTimeComboBox" HorizontalAlignment="Left" Margin="180,139,0,0" VerticalAlignment="Top" Width="218" PlaceholderText="Select Roundtime (sec)" SelectionChanged="RoundTimeComboBox_SelectionChanged">
-            <ListBoxItem Content="30"/>
-            <ListBoxItem Content="60"/>
-            <ListBoxItem Content="90"/>
-        </ComboBox>
-
     </Grid>
 </Page>

@@ -17,11 +17,20 @@ using Windows.UI.Xaml.Navigation;
 
 namespace harjoitustyo
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class GameOverPage : Page
     {
+        private Player player;
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            player = (Player)e.Parameter;
+            PlayerNameTextBox.Text = player.PlayerName;
+            TotalScoreTextBox.Text = player.PlayerScore.ToString();
+            base.OnNavigatedTo(e);
+        }
+
+
         public GameOverPage()
         {
             this.InitializeComponent();
