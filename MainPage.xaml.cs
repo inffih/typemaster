@@ -19,19 +19,22 @@ using Windows.UI.Xaml.Navigation;
 
 namespace harjoitustyo
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class MainPage : Page
     {
-
         public string playerName = "Player";
+        private Player player;     
 
         public MainPage()
         {
             this.InitializeComponent();
+            PlayerNameTextBox.TextChanged += PlayerNameTextBox_TextChanged;
         }
 
+        private void PlayerNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PlayerNameButton.IsEnabled = true;
+        }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
@@ -44,26 +47,35 @@ namespace harjoitustyo
             playerName = PlayerNameTextBox.Text;
         }
 
-        private void HighscoresButton_Copy_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)
         {
+            AfterGameStackPanel.Visibility = Visibility.Collapsed;
+            HowToPlayStackPanel.Visibility = Visibility.Collapsed;
             HighscoresStackPanel.Visibility = Visibility.Collapsed;
             NewGameStackPanel.Visibility = Visibility.Visible;
         }
 
         private void HighscoresButton_Click(object sender, RoutedEventArgs e)
         {
+            AfterGameStackPanel.Visibility = Visibility.Collapsed;
+            HowToPlayStackPanel.Visibility = Visibility.Collapsed;
             NewGameStackPanel.Visibility = Visibility.Collapsed;
             HighscoresStackPanel.Visibility = Visibility.Visible;
+        }
+
+        private void HowToPlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            AfterGameStackPanel.Visibility = Visibility.Collapsed;
+            NewGameStackPanel.Visibility = Visibility.Collapsed;
+            HighscoresStackPanel.Visibility = Visibility.Collapsed;
+            HowToPlayStackPanel.Visibility = Visibility.Visible;
         }
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
             CoreApplication.Exit();
         }
+
     }
 }

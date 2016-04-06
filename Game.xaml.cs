@@ -28,7 +28,7 @@ namespace harjoitustyo
         private string pressedKey;
         private string currentWord;
 
-        private int RoundTime = 30;
+        private int RoundTime = 5;
         private int keyPressIndex = 0;
         private int randomIndex;
         private DispatcherTimer timer;
