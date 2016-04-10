@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,13 +23,40 @@ namespace harjoitustyo
 
     public sealed partial class MainPage : Page
     {
-        public string playerName = "Player";
-        private Player player;     
+        public string playerName;
+        private MediaElement gameMusic;
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // get player name from last game
+            if (e.Parameter is string)
+            {             
+                playerName = e.Parameter.ToString();
+                PlayerNameTextBox.Text = playerName;
+            }
+            base.OnNavigatedTo(e);
+        }
+
+
+        private async void PlayGameMusic()
+        {
+            gameMusic = new MediaElement();
+            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
+            StorageFile file = await folder.GetFileAsync("gamemusic.wav");
+            var stream = await file.OpenAsync(FileAccessMode.Read);
+            gameMusic.AutoPlay = true;
+            gameMusic.IsLooping = true;
+            gameMusic.SetSource(stream, file.ContentType);
+        }
+
 
         public MainPage()
         {
             this.InitializeComponent();
+            // enable name change button if textbox value changes
             PlayerNameTextBox.TextChanged += PlayerNameTextBox_TextChanged;
+            // init bg music
+            PlayGameMusic();
         }
 
         private void PlayerNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -38,12 +66,14 @@ namespace harjoitustyo
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            // add and navigate to a new page
+            // navitage to game page
+            Debug.WriteLine(playerName);
             this.Frame.Navigate(typeof(Game), playerName);
         }
 
         private void PlayerNameButton_Click(object sender, RoutedEventArgs e)
         {
+            // change player name 
             playerName = PlayerNameTextBox.Text;
         }
 

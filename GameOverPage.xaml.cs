@@ -21,12 +21,14 @@ namespace harjoitustyo
     public sealed partial class GameOverPage : Page
     {
         private Player player;
+        private string lastPlayerName;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             player = (Player)e.Parameter;
             PlayerNameTextBox.Text = player.PlayerName;
             TotalScoreTextBox.Text = player.PlayerScore.ToString();
+            lastPlayerName = player.PlayerName;
             base.OnNavigatedTo(e);
         }
 
@@ -34,6 +36,11 @@ namespace harjoitustyo
         public GameOverPage()
         {
             this.InitializeComponent();
+        }
+
+        private void MainMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage), lastPlayerName);
         }
     }
 }

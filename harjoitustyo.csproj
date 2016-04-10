@@ -117,6 +117,22 @@
     <None Include="harjoitustyo_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Keyclicks\1.wav" />
+    <Content Include="Assets\Keyclicks\10.wav" />
+    <Content Include="Assets\Keyclicks\11.wav" />
+    <Content Include="Assets\Keyclicks\12.wav" />
+    <Content Include="Assets\Keyclicks\13.wav" />
+    <Content Include="Assets\Keyclicks\14.wav" />
+    <Content Include="Assets\Keyclicks\15.wav" />
+    <Content Include="Assets\Keyclicks\2.wav" />
+    <Content Include="Assets\Keyclicks\3.wav" />
+    <Content Include="Assets\Keyclicks\4.wav" />
+    <Content Include="Assets\Keyclicks\5.wav" />
+    <Content Include="Assets\Keyclicks\6.wav" />
+    <Content Include="Assets\Keyclicks\7.wav" />
+    <Content Include="Assets\Keyclicks\8.wav" />
+    <Content Include="Assets\Keyclicks\9.wav" />
+    <Content Include="Assets\gamemusic.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

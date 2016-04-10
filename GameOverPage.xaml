@@ -8,8 +8,35 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBox x:Name="PlayerNameTextBox" HorizontalAlignment="Left" Margin="240,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="52" Width="117" IsReadOnly="True"/>
-        <TextBox x:Name="TotalScoreTextBox" HorizontalAlignment="Left" Margin="240,193,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="53" Width="117" IsReadOnly="True"/>
-
+        <TextBox
+            x:Name="PlayerNameTextBox"
+            HorizontalAlignment="Left"
+            Margin="240,153,0,0"
+            TextWrapping="Wrap"
+            Text=""
+            VerticalAlignment="Top"
+            Height="35"
+            Width="100"
+            IsReadOnly="True"/>
+        <TextBox
+            x:Name="TotalScoreTextBox"
+            HorizontalAlignment="Left"
+            Margin="240,200,0,0"
+            TextWrapping="Wrap"
+            Text=""
+            VerticalAlignment="Top"
+            Height="35"
+            Width="100"
+            IsReadOnly="True"/>
+        <Button
+                x:Name="MainMenuButton"
+                Content="Main Menu"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,0"
+                VerticalAlignment="Top"
+                Height="35"
+                Width="100"
+                Grid.Column="1" Click="MainMenuButton_Click"
+                />
     </Grid>
 </Page>

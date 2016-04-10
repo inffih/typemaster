@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,10 +29,11 @@ namespace harjoitustyo
         private string pressedKey;
         private string currentWord;
 
-        private int RoundTime = 5;
+        private int RoundTime = 30;
         private int keyPressIndex = 0;
         private int randomIndex;
         private DispatcherTimer timer;
+        private MediaElement keyClick;
 
         Random rnd = new Random();    
         Stopwatch stopwatch = new Stopwatch();
@@ -42,14 +44,38 @@ namespace harjoitustyo
             // get player's name from mainpage and set it to player object
             string playerName = e.Parameter.ToString();
             player.PlayerName = playerName;
+            if (player.PlayerName == "")
+            {
+                player.PlayerName = "Player";
+            }
             PlayerNameTextBox.Text = player.PlayerName;
             base.OnNavigatedTo(e);
         }
 
-        // main thing ...? whatever
+        private async void PlayKeyClick(int key)
+        {
+
+            keyClick = new MediaElement();
+            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets\\Keyclicks");
+            // save keypressindex to string to get the corresponding wav file
+            string filename = key.ToString() + ".wav";
+            // use filenime variable to get the correct file
+            StorageFile file = await folder.GetFileAsync(filename);
+            var stream = await file.OpenAsync(FileAccessMode.Read);
+            keyClick.SetSource(stream, file.ContentType);
+            keyClick.MediaOpened += KeyClick_MediaOpened;            
+
+        }
+
+        private void KeyClick_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            keyClick.Play();
+        }
+
+
         public Game()
         {
-            this.InitializeComponent();          
+            this.InitializeComponent();
             UpdateScore();
             loadNewWord();
 
@@ -71,9 +97,9 @@ namespace harjoitustyo
             CountDownTextBox.Text = (RoundTime - stopwatch.Elapsed.Seconds).ToString();
             if ( (RoundTime - stopwatch.Elapsed.Seconds) <= 0)
             {
+                timer.Stop();
                 GameOver();
             }
-
         }
 
         private void GameOver()
@@ -99,6 +125,8 @@ namespace harjoitustyo
            // check if correct key is pressed
             if (pressedKey == currentWord[keyPressIndex - 1].ToString())
             {
+                // call and send info of pressed key to PlayKeyClick
+                PlayKeyClick(keyPressIndex);
                 // if word is complete, draw new word and update score
                 if (keyPressIndex < currentWord.Length)
                 {
@@ -117,6 +145,7 @@ namespace harjoitustyo
             // if wrong key is pressed clear word and update score
             else
             {
+                Debug.WriteLine("uncorrect key");
                 PressedKeysStackPanel.Children.Clear();
                 keyPressIndex = 0;
                 player.DecreasePoints(5);
