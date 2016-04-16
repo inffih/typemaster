@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,7 +23,18 @@ namespace harjoitustyo
     /// </summary>
     sealed partial class App : Application
     {
-             
+        private MediaElement gameMusic;
+        public async void PlayGameMusic()
+        {
+            gameMusic = new MediaElement();
+            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
+            StorageFile file = await folder.GetFileAsync("gamemusic.wav");
+            var stream = await file.OpenAsync(FileAccessMode.Read);
+            gameMusic.AutoPlay = true;
+            gameMusic.IsLooping = true;
+            gameMusic.SetSource(stream, file.ContentType);
+        }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

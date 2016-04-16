@@ -24,7 +24,7 @@ namespace harjoitustyo
     public sealed partial class MainPage : Page
     {
         public string playerName;
-        private MediaElement gameMusic;
+        
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -38,25 +38,13 @@ namespace harjoitustyo
         }
 
 
-        private async void PlayGameMusic()
-        {
-            gameMusic = new MediaElement();
-            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
-            StorageFile file = await folder.GetFileAsync("gamemusic.wav");
-            var stream = await file.OpenAsync(FileAccessMode.Read);
-            gameMusic.AutoPlay = true;
-            gameMusic.IsLooping = true;
-            gameMusic.SetSource(stream, file.ContentType);
-        }
-
-
         public MainPage()
         {
             this.InitializeComponent();
             // enable name change button if textbox value changes
             PlayerNameTextBox.TextChanged += PlayerNameTextBox_TextChanged;
             // init bg music
-            PlayGameMusic();
+            (App.Current as App).PlayGameMusic();
         }
 
         private void PlayerNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
