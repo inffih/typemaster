@@ -43,8 +43,12 @@ namespace harjoitustyo
             this.InitializeComponent();
             // enable name change button if textbox value changes
             PlayerNameTextBox.TextChanged += PlayerNameTextBox_TextChanged;
-            // init bg music
-            (App.Current as App).PlayGameMusic();
+            // check if game music is already running. If not, then play it
+            // basicly this is run only once when the game starts and is never initialized again
+            if (!App.musicIsRunning == true)
+            {
+                (App.Current as App).PlayGameMusic();
+            }      
         }
 
         private void PlayerNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -55,7 +59,6 @@ namespace harjoitustyo
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             // navitage to game page
-            Debug.WriteLine(playerName);
             this.Frame.Navigate(typeof(Game), playerName);
         }
 

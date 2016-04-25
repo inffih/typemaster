@@ -28,10 +28,12 @@ namespace harjoitustyo
         private string[] WordsArray = File.ReadAllLines("words.txt");
         private string pressedKey;
         private string currentWord;
+        private bool allowTyping;
 
         private int RoundTime = 30;
         private int keyPressIndex = 0;
         private int randomIndex;
+        private DispatcherTimer delayNewWord;
         private DispatcherTimer timer;
         private MediaElement keyClick;
 
@@ -44,10 +46,12 @@ namespace harjoitustyo
             // get player's name from mainpage and set it to player object
             string playerName = e.Parameter.ToString();
             player.PlayerName = playerName;
+            // if player did not insert a name, use default name "Player"
             if (player.PlayerName == "")
             {
                 player.PlayerName = "Player";
             }
+            // show player name to the player
             PlayerNameTextBox.Text = player.PlayerName;
             base.OnNavigatedTo(e);
         }
@@ -59,7 +63,7 @@ namespace harjoitustyo
             StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets\\Keyclicks");
             // save keypressindex to string to get the corresponding wav file
             string filename = key.ToString() + ".wav";
-            // use filenime variable to get the correct file
+            // use filename variable to get the correct file
             StorageFile file = await folder.GetFileAsync(filename);
             var stream = await file.OpenAsync(FileAccessMode.Read);
             keyClick.SetSource(stream, file.ContentType);
@@ -76,6 +80,7 @@ namespace harjoitustyo
         public Game()
         {
             this.InitializeComponent();
+            allowTyping = true;
             UpdateScore();
             loadNewWord();
 
@@ -88,7 +93,19 @@ namespace harjoitustyo
 
             // Add key listener
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+
+            // delay to load new word
+            delayNewWord = new DispatcherTimer();
+            delayNewWord.Tick += DelayNewWord_Tick;
+            delayNewWord.Interval = new TimeSpan(0, 0, 1);
          
+        }
+
+        private void DelayNewWord_Tick(object sender, object e)
+        {       
+            delayNewWord.Stop();
+            loadNewWord();
+            allowTyping = true;
         }
 
         private void Timer_Tick(object sender, object e)
@@ -98,6 +115,7 @@ namespace harjoitustyo
             if ( (RoundTime - stopwatch.Elapsed.Seconds) <= 0)
             {
                 timer.Stop();
+                allowTyping = false;
                 GameOver();
             }
         }
@@ -109,47 +127,61 @@ namespace harjoitustyo
 
         private void loadNewWord()
         {
+            // clear last word from screen
+            PressedKeysStackPanel.Children.Clear();
+            // reset keypress index
+            keyPressIndex = 0;
             // load new word
             randomIndex = rnd.Next(0, WordsArray.Length);
             currentWord = WordsArray[randomIndex].ToUpper();
             currentWordTextBox.Text = currentWord;
         }
 
+  
+
         // detect current pressed key 
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
 
-            pressedKey = args.VirtualKey.ToString();
-            keyPressIndex++;
-
-           // check if correct key is pressed
-            if (pressedKey == currentWord[keyPressIndex - 1].ToString())
+            if (allowTyping == true)
             {
-                // call and send info of pressed key to PlayKeyClick
-                PlayKeyClick(keyPressIndex);
-                // if word is complete, draw new word and update score
-                if (keyPressIndex < currentWord.Length)
+                pressedKey = args.VirtualKey.ToString();
+                keyPressIndex++;            
+
+                // check if correct key is pressed
+                if (pressedKey == currentWord[keyPressIndex - 1].ToString())
                 {
-                    createTextBox(pressedKey);
+                    // call and send info of pressed key to PlayKeyClick
+                    PlayKeyClick(keyPressIndex);
+                    // if word is complete, draw new word and update score
+                    if (keyPressIndex < currentWord.Length)
+                    {
+                        createTextBox(pressedKey);
+                    }
+                    else
+                    {
+                        createTextBox(pressedKey);                                        
+                        // give points based on given word lenght
+                        player.AddPoints(currentWord.Length * 5);
+                        foreach (UIElement txt in PressedKeysStackPanel.Children)
+                        {
+                            TextBox box = txt as TextBox;
+                            box.Background = new SolidColorBrush(Colors.Green);
+                        }
+                        allowTyping = false;
+                        UpdateScore();
+                        delayNewWord.Start();              
+                    }
                 }
+                // if wrong key is pressed clear word and update score
                 else
                 {
-                    createTextBox(pressedKey);
-                    loadNewWord();
-                    keyPressIndex = 0;
+                    Debug.WriteLine("incorrect key");
                     PressedKeysStackPanel.Children.Clear();
-                    player.AddPoints(20);
-                    UpdateScore();      
-                } 
-            }
-            // if wrong key is pressed clear word and update score
-            else
-            {
-                Debug.WriteLine("uncorrect key");
-                PressedKeysStackPanel.Children.Clear();
-                keyPressIndex = 0;
-                player.DecreasePoints(5);
-                UpdateScore();
+                    keyPressIndex = 0;
+                    player.DecreasePoints(5);
+                    UpdateScore();
+                }
             }
         }
 
@@ -164,7 +196,7 @@ namespace harjoitustyo
             txt.Width = 5;
             txt.Height = 20;
             txt.Text = keyToPrint;
-            txt.TextAlignment = TextAlignment.Center;
+            txt.TextAlignment = TextAlignment.Center;           
             PressedKeysStackPanel.Children.Add(txt);
         }
     }

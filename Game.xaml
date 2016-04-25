@@ -9,10 +9,10 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBox x:Name="currentWordTextBox" HorizontalAlignment="Left" Margin="304,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True"/>
-        <StackPanel x:Name="PressedKeysStackPanel" HorizontalAlignment="Left" Height="50" Margin="10,260,0,0" VerticalAlignment="Top" Width="620" Orientation="Horizontal"/>
-        <TextBox x:Name="PlayerNameTextBox" HorizontalAlignment="Left" Margin="477,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True"/>
-        <TextBox x:Name="PlayerScoreTextBox" HorizontalAlignment="Left" Margin="546,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True"/>
-        <TextBox x:Name="CountDownTextBox" HorizontalAlignment="Left" Margin="46,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True"/>
+        <StackPanel x:Name="PressedKeysStackPanel" HorizontalAlignment="Left" Height="50" Margin="46,260,0,0" VerticalAlignment="Top" Width="800" Orientation="Horizontal"/>
+        <TextBox x:Name="PlayerNameTextBox" HorizontalAlignment="Left" Margin="477,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True"/>
+        <TextBox x:Name="PlayerScoreTextBox" HorizontalAlignment="Left" Margin="546,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True"/>
+        <TextBox x:Name="CountDownTextBox" HorizontalAlignment="Left" Margin="46,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True"/>
 
     </Grid>
 </Page>

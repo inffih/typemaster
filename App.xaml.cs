@@ -23,7 +23,9 @@ namespace harjoitustyo
     /// </summary>
     sealed partial class App : Application
     {
-        private MediaElement gameMusic;
+        public MediaElement gameMusic;
+        public static bool musicIsRunning { get; set; }
+
         public async void PlayGameMusic()
         {
             gameMusic = new MediaElement();
@@ -33,6 +35,7 @@ namespace harjoitustyo
             gameMusic.AutoPlay = true;
             gameMusic.IsLooping = true;
             gameMusic.SetSource(stream, file.ContentType);
+            musicIsRunning = true;
         }
 
         /// <summary>
