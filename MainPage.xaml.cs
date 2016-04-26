@@ -23,16 +23,19 @@ namespace harjoitustyo
 
     public sealed partial class MainPage : Page
     {
-        public string playerName;
-        
+        public string playerName = "Player";
+        private Player player;
+        List<Player> highscoreList = new List<Player>();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // get player name from last game
-            if (e.Parameter is string)
-            {             
-                playerName = e.Parameter.ToString();
-                PlayerNameTextBox.Text = playerName;
+            if (e.Parameter is Player)
+            {
+                player = (Player)e.Parameter;
+                playerName = player.PlayerName;
+                PlayerNameTextBox.Text = player.PlayerName;
+                highscoreList.Add(player);
             }
             base.OnNavigatedTo(e);
         }
@@ -44,11 +47,22 @@ namespace harjoitustyo
             // enable name change button if textbox value changes
             PlayerNameTextBox.TextChanged += PlayerNameTextBox_TextChanged;
             // check if game music is already running. If not, then play it
-            // basicly this is run only once when the game starts and is never initialized again
+            // basically this is run only once when the game starts and is never initialized again
             if (!App.musicIsRunning == true)
             {
                 (App.Current as App).PlayGameMusic();
-            }      
+            }
+            populateHighscoreList();
+
+        }
+
+        private void populateHighscoreList()
+        {
+            highscoreList.Add(new Player("BOT George", 20));
+            highscoreList.Add(new Player("BOT Xavier", 100));
+            highscoreList.Add(new Player("BOT Allu", 200));
+            highscoreList.Add(new Player("BOT Quintin", 250));
+            highscoreList.Add(new Player("BOT Pheonix", 375));
         }
 
         private void PlayerNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -83,6 +97,18 @@ namespace harjoitustyo
             HowToPlayStackPanel.Visibility = Visibility.Collapsed;
             NewGameStackPanel.Visibility = Visibility.Collapsed;
             HighscoresStackPanel.Visibility = Visibility.Visible;
+
+            showHighscores();
+
+        }
+
+        private void showHighscores()
+        {
+            foreach (Player highscore in highscoreList)
+            {
+                Debug.WriteLine(highscore.PlayerName + highscore.PlayerScore);
+            }
+
         }
 
         private void HowToPlayButton_Click(object sender, RoutedEventArgs e)

@@ -16,7 +16,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace harjoitustyo
 {
@@ -30,9 +29,10 @@ namespace harjoitustyo
         private string currentWord;
         private bool allowTyping;
 
-        private int RoundTime = 30;
+        private int RoundTime = 10;
         private int keyPressIndex = 0;
         private int randomIndex;
+
         private DispatcherTimer delayNewWord;
         private DispatcherTimer timer;
         private MediaElement keyClick;

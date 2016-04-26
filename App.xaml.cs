@@ -24,7 +24,7 @@ namespace harjoitustyo
     sealed partial class App : Application
     {
         public MediaElement gameMusic;
-        public static bool musicIsRunning { get; set; }
+        public static bool musicIsRunning { get; set; }     
 
         public async void PlayGameMusic()
         {

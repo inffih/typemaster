@@ -11,9 +11,14 @@ namespace harjoitustyo
         public string PlayerName { get; set; }
         public int PlayerScore { get; set; }
 
-        public Player()
-        {
+        // default constructor
+        public Player(){}
 
+        // parametric constructor
+        public Player(string playerName, int playerScore)
+        {
+            PlayerName = playerName;
+            PlayerScore = playerScore;
         }
 
         public void AddPoints(int points)
