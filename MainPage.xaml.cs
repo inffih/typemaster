@@ -25,7 +25,6 @@ namespace harjoitustyo
     {
         public string playerName = "Player";
         private Player player;
-        List<Player> highscoreList = new List<Player>();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -35,7 +34,6 @@ namespace harjoitustyo
                 player = (Player)e.Parameter;
                 playerName = player.PlayerName;
                 PlayerNameTextBox.Text = player.PlayerName;
-                highscoreList.Add(player);
             }
             base.OnNavigatedTo(e);
         }
@@ -52,18 +50,8 @@ namespace harjoitustyo
             {
                 (App.Current as App).PlayGameMusic();
             }
-            populateHighscoreList();
-
         }
 
-        private void populateHighscoreList()
-        {
-            highscoreList.Add(new Player("BOT George", 20));
-            highscoreList.Add(new Player("BOT Xavier", 100));
-            highscoreList.Add(new Player("BOT Allu", 200));
-            highscoreList.Add(new Player("BOT Quintin", 250));
-            highscoreList.Add(new Player("BOT Pheonix", 375));
-        }
 
         private void PlayerNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -80,6 +68,7 @@ namespace harjoitustyo
         {
             // change player name 
             playerName = PlayerNameTextBox.Text;
+            PlayerNameButton.Content = "Name changed!";
         }
 
 
@@ -97,19 +86,8 @@ namespace harjoitustyo
             HowToPlayStackPanel.Visibility = Visibility.Collapsed;
             NewGameStackPanel.Visibility = Visibility.Collapsed;
             HighscoresStackPanel.Visibility = Visibility.Visible;
-
-            showHighscores();
-
         }
 
-        private void showHighscores()
-        {
-            foreach (Player highscore in highscoreList)
-            {
-                Debug.WriteLine(highscore.PlayerName + highscore.PlayerScore);
-            }
-
-        }
 
         private void HowToPlayButton_Click(object sender, RoutedEventArgs e)
         {
@@ -123,6 +101,5 @@ namespace harjoitustyo
         {
             CoreApplication.Exit();
         }
-
     }
 }

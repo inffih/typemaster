@@ -8,8 +8,28 @@ namespace harjoitustyo
 {
     class Player
     {
+        private readonly int minScore = 0;
         public string PlayerName { get; set; }
-        public int PlayerScore { get; set; }
+        private int playerScore;
+        public int PlayerScore
+        {
+            get
+            {
+                return playerScore;
+            }
+            set
+            {
+                // if score is under 0 then set score equal to minScore
+                if (value > 0)
+                {
+                    playerScore = value;
+                }
+                else
+                {
+                    playerScore = minScore;
+                }
+            }
+        }
 
         // default constructor
         public Player(){}
@@ -28,7 +48,12 @@ namespace harjoitustyo
 
         public void DecreasePoints(int points)
         {
-            PlayerScore = PlayerScore - points;
+            PlayerScore = PlayerScore - points;         
+        }
+
+        public int GetScore()
+        {
+            return PlayerScore;
         }
     }
 }

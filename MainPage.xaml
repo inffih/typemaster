@@ -5,14 +5,15 @@
     xmlns:local="using:harjoitustyo"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Width="900" Height="500">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="47*"/>
-            <ColumnDefinition Width="593*"/>
-        </Grid.ColumnDefinitions>
-
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF548BB0" Offset="1"/>
+                <GradientStop Color="#FF9DD0F3"/>
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <StackPanel
             x:Name="MenuButtonsStackPanel"
@@ -33,7 +34,7 @@
                 Width="100"
                 Grid.Column="1"
                 Click="NewGameButton_Click"/>
-            
+
             <Button
                 x:Name="HighscoresButton"
                 Content="Highscores"
@@ -44,7 +45,7 @@
                 Width="100"
                 Grid.Column="1"
                 Click="HighscoresButton_Click"/>
-            
+
             <Button
         	    x:Name="HowToPlayButton"
         	    Content="How To Play"
@@ -64,7 +65,7 @@
                 Height="35"
                 Width="100"
                 Grid.Column="1" Click="QuitButton_Click"/>
-            
+
         </StackPanel>
 
         <StackPanel
@@ -111,7 +112,7 @@
             HorizontalAlignment="Left"
             Margin="300,100,0,0"
             VerticalAlignment="Top"
-            Width="100"
+            Width="171"
             Height="200"
             Grid.Column="1"
             Visibility="Visible">
@@ -119,19 +120,19 @@
             <TextBox
                 x:Name="PlayerNameTextBox"
                 HorizontalAlignment="Left"
-                Margin="0,0,0,0"
+                Margin="0,0,-71,0"
                 TextWrapping="Wrap"
                 Text=""
                 VerticalAlignment="Top"
                 PlaceholderText="Player"
-                Width="100"
+                Width="171"
                 Height="35"/>
             <Button
                 x:Name="PlayerNameButton"
                 Content="Set Name"
                 HorizontalAlignment="Left"
-                Margin="0,10,0,0"
-                Width="100"
+                Margin="0,10,-71,0"
+                Width="171"
                 Height="35"
                 VerticalAlignment="Top"
                 Click="PlayerNameButton_Click"
@@ -140,11 +141,11 @@
                 x:Name="PlayButton"
                 Content="Start Game!"
                 HorizontalAlignment="Left"
-                Margin="0,40,0,0"
+                Margin="0,40,-71,0"
                 VerticalAlignment="Top"
                 Click="PlayButton_Click"
                 Height="35"
-                Width="100"/>
+                Width="171"/>
 
         </StackPanel>
 
@@ -152,7 +153,7 @@
             x:Name="HighscoresStackPanel"
             HorizontalAlignment="Left"
             Height="242"
-            Margin="293,60,0,0"
+            Margin="293,100,0,0"
             VerticalAlignment="Top"
             Width="147"
             Grid.Column="1"
@@ -161,7 +162,15 @@
             <TextBlock
                 x:Name="HighscoresTextBlock"
                 TextWrapping="Wrap"
-                Text="Highscores"/>
+                Text="
+                
+                Highscores:
+                BOT Pheonix: 375
+                BOT Quintin: 250
+                BOT Allu: 200
+                BOT Xavier: 100
+                BOT George: 20      
+                "/>
 
         </StackPanel>
 
@@ -169,20 +178,22 @@
             x:Name="HowToPlayStackPanel"
             HorizontalAlignment="Left"
             Height="242"
-            Margin="293,60,0,0"
+            Margin="293,100,0,0"
             VerticalAlignment="Top"
-            Width="147"
+            Width="300"
             Grid.Column="1"
             Visibility="Collapsed">
 
             <TextBlock
                 x:Name="HowToPlayTextBlock"
                 TextWrapping="Wrap"
-                Text="How To Play"/>
+                Text="
+                
+                How To Play
+                Write the word you see displayed in the center of the screen as fast as you can. Gain points from each completed word and be happy.         
+                "/>
 
         </StackPanel>
-
-
-
+        <TextBlock x:Name="typemeisterLogo" HorizontalAlignment="Left" Margin="100,26,0,0" TextWrapping="Wrap" Text="Typemeister" VerticalAlignment="Top" FontFamily="Courier New" FontSize="48" FontWeight="Bold"/>
     </Grid>
 </Page>

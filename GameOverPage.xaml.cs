@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace harjoitustyo
 {
@@ -27,7 +26,7 @@ namespace harjoitustyo
         {
             player = (Player)e.Parameter;
             PlayerNameTextBox.Text = player.PlayerName;
-            TotalScoreTextBox.Text = player.PlayerScore.ToString();
+            TotalScoreTextBox.Text = player.GetScore().ToString();
             base.OnNavigatedTo(e);
         }
 
@@ -35,7 +34,6 @@ namespace harjoitustyo
         public GameOverPage()
         {
             this.InitializeComponent();
-
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)

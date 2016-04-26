@@ -5,38 +5,45 @@
     xmlns:local="using:harjoitustyo"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Width="900" Height="500">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF548BB0" Offset="1"/>
+                <GradientStop Color="#FF9DD0F3"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <TextBlock x:Name="typemeisterLogo" HorizontalAlignment="Left" Margin="100,26,0,0" TextWrapping="Wrap" Text="Typemeister" VerticalAlignment="Top" FontFamily="Courier New" FontSize="48" FontWeight="Bold"/>
+
         <TextBox
             x:Name="PlayerNameTextBox"
             HorizontalAlignment="Left"
-            Margin="240,153,0,0"
+            Margin="330,174,0,0"
             TextWrapping="Wrap"
             Text=""
             VerticalAlignment="Top"
             Height="35"
-            Width="100"
+            Width="222"
             IsReadOnly="True"/>
         <TextBox
             x:Name="TotalScoreTextBox"
             HorizontalAlignment="Left"
-            Margin="240,200,0,0"
+            Margin="330,221,0,0"
             TextWrapping="Wrap"
             Text=""
             VerticalAlignment="Top"
             Height="35"
-            Width="100"
+            Width="222"
             IsReadOnly="True"/>
         <Button
                 x:Name="MainMenuButton"
                 Content="Main Menu"
                 HorizontalAlignment="Left"
-                Margin="0,0,0,0"
+                Margin="330,305,0,0"
                 VerticalAlignment="Top"
                 Height="35"
-                Width="100"
-                Grid.Column="1" Click="MainMenuButton_Click"
+                Width="222" Click="MainMenuButton_Click"
                 />
     </Grid>
 </Page>

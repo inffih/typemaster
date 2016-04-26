@@ -27,11 +27,12 @@ namespace harjoitustyo
         private string[] WordsArray = File.ReadAllLines("words.txt");
         private string pressedKey;
         private string currentWord;
-        private bool allowTyping;
 
         private int RoundTime = 10;
         private int keyPressIndex = 0;
         private int randomIndex;
+
+        private bool allowTyping = false;
 
         private DispatcherTimer delayNewWord;
         private DispatcherTimer timer;
@@ -40,7 +41,7 @@ namespace harjoitustyo
         Random rnd = new Random();    
         Stopwatch stopwatch = new Stopwatch();
         Player player = new Player();
-
+        
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // get player's name from mainpage and set it to player object
@@ -80,9 +81,11 @@ namespace harjoitustyo
         public Game()
         {
             this.InitializeComponent();
-            allowTyping = true;
             UpdateScore();
             loadNewWord();
+
+            // Add key listener
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
 
             // timer for round time
             timer = new DispatcherTimer();
@@ -90,9 +93,6 @@ namespace harjoitustyo
             timer.Interval = new TimeSpan(0, 0, 1);
             stopwatch.Start();
             timer.Start();
-
-            // Add key listener
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
 
             // delay to load new word
             delayNewWord = new DispatcherTimer();
@@ -102,10 +102,9 @@ namespace harjoitustyo
         }
 
         private void DelayNewWord_Tick(object sender, object e)
-        {       
+        {
             delayNewWord.Stop();
             loadNewWord();
-            allowTyping = true;
         }
 
         private void Timer_Tick(object sender, object e)
@@ -113,15 +112,16 @@ namespace harjoitustyo
             // check if still time left or if gameover
             CountDownTextBox.Text = (RoundTime - stopwatch.Elapsed.Seconds).ToString();
             if ( (RoundTime - stopwatch.Elapsed.Seconds) <= 0)
-            {
+            {               
                 timer.Stop();
-                allowTyping = false;
                 GameOver();
             }
         }
 
         private void GameOver()
         {
+            // remove key listener  
+            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
             this.Frame.Navigate(typeof(GameOverPage), player);
         }
 
@@ -134,19 +134,23 @@ namespace harjoitustyo
             // load new word
             randomIndex = rnd.Next(0, WordsArray.Length);
             currentWord = WordsArray[randomIndex].ToUpper();
-            currentWordTextBox.Text = currentWord;
+            currentWordTextBlock.Text = currentWord;
+            // allow typing
+            allowTyping = true;
         }
 
   
-
         // detect current pressed key 
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
+            pressedKey = args.VirtualKey.ToString();
+            keyPressIndex++;
 
-            if (allowTyping == true)
+            // check if typing is allowed
+            // this ensures that the user can not register
+            // key events while delayNewWord is running
+            if (allowTyping)
             {
-                pressedKey = args.VirtualKey.ToString();
-                keyPressIndex++;            
 
                 // check if correct key is pressed
                 if (pressedKey == currentWord[keyPressIndex - 1].ToString())
@@ -166,10 +170,11 @@ namespace harjoitustyo
                         foreach (UIElement txt in PressedKeysStackPanel.Children)
                         {
                             TextBox box = txt as TextBox;
-                            box.Background = new SolidColorBrush(Colors.Green);
+                            box.Background = new SolidColorBrush(Colors.LightGreen);
                         }
-                        allowTyping = false;
                         UpdateScore();
+                        // disable typing while delayNewWord runs
+                        allowTyping = false;
                         delayNewWord.Start();              
                     }
                 }
@@ -187,14 +192,14 @@ namespace harjoitustyo
 
         private void UpdateScore()
         {
-            PlayerScoreTextBox.Text = player.PlayerScore.ToString();
+            PlayerScoreTextBox.Text = player.GetScore().ToString();
         }
 
         private void createTextBox(string keyToPrint)
         {
             TextBox txt = new TextBox();
-            txt.Width = 5;
-            txt.Height = 20;
+            txt.MinWidth = 40;
+            txt.Height = 10;
             txt.Text = keyToPrint;
             txt.TextAlignment = TextAlignment.Center;           
             PressedKeysStackPanel.Children.Add(txt);
