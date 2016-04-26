@@ -20,5 +20,16 @@
         <TextBox x:Name="PlayerScoreTextBox" HorizontalAlignment="Left" Margin="333,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True" Width="202"/>
         <TextBox x:Name="CountDownTextBox" HorizontalAlignment="Left" Margin="100,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" IsReadOnly="True"/>
         <TextBlock x:Name="currentWordTextBlock" HorizontalAlignment="Left" Margin="100,213,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="36"/>
+
+        <Button
+                x:Name="QuitToMainMenuButton"
+                Content="Quit to main menu"
+                HorizontalAlignment="Left"
+                Margin="570,45,0,0"
+                VerticalAlignment="Top"
+                Height="35"
+                Width="202" Click="QuitToMainMenuButton_Click"
+                />
+
     </Grid>
 </Page>

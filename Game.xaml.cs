@@ -28,7 +28,7 @@ namespace harjoitustyo
         private string pressedKey;
         private string currentWord;
 
-        private int RoundTime = 10;
+        private int RoundTime = 45;
         private int keyPressIndex = 0;
         private int randomIndex;
 
@@ -37,11 +37,13 @@ namespace harjoitustyo
         private DispatcherTimer delayNewWord;
         private DispatcherTimer timer;
         private MediaElement keyClick;
+        private MediaElement wrongKeyClick;
 
         Random rnd = new Random();    
         Stopwatch stopwatch = new Stopwatch();
         Player player = new Player();
-        
+        private DispatcherTimer flashScore;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // get player's name from mainpage and set it to player object
@@ -72,6 +74,23 @@ namespace harjoitustyo
 
         }
 
+        private async void PlayWrongKeyClick()
+        {
+
+            wrongKeyClick = new MediaElement();
+            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets\\Keyclicks");
+            StorageFile file = await folder.GetFileAsync("wrong.wav");
+            var stream = await file.OpenAsync(FileAccessMode.Read);
+            wrongKeyClick.SetSource(stream, file.ContentType);
+            wrongKeyClick.MediaOpened += WrongKeyClick_MediaOpened;
+
+        }
+
+        private void WrongKeyClick_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            wrongKeyClick.Play();
+        }
+
         private void KeyClick_MediaOpened(object sender, RoutedEventArgs e)
         {
             keyClick.Play();
@@ -98,7 +117,21 @@ namespace harjoitustyo
             delayNewWord = new DispatcherTimer();
             delayNewWord.Tick += DelayNewWord_Tick;
             delayNewWord.Interval = new TimeSpan(0, 0, 1);
+
+            // flash score textbox
+            flashScore = new DispatcherTimer();
+            flashScore.Tick += FlashScore_Tick;
+            flashScore.Interval = new TimeSpan(0, 0, 1);
          
+        }
+
+        // this sets Score textbox's bg color back to white
+        // after it has been changed to green or red
+        // regarding the players typing skills
+        private void FlashScore_Tick(object sender, object e)
+        {
+            flashScore.Stop();
+            PlayerScoreTextBox.Background = new SolidColorBrush(Colors.White);
         }
 
         private void DelayNewWord_Tick(object sender, object e)
@@ -112,7 +145,8 @@ namespace harjoitustyo
             // check if still time left or if gameover
             CountDownTextBox.Text = (RoundTime - stopwatch.Elapsed.Seconds).ToString();
             if ( (RoundTime - stopwatch.Elapsed.Seconds) <= 0)
-            {               
+            {
+                stopwatch.Stop();
                 timer.Stop();
                 GameOver();
             }
@@ -171,8 +205,10 @@ namespace harjoitustyo
                         {
                             TextBox box = txt as TextBox;
                             box.Background = new SolidColorBrush(Colors.LightGreen);
-                        }
+                        }             
+                        PlayerScoreTextBox.Background = new SolidColorBrush(Colors.LightGreen);
                         UpdateScore();
+                        flashScore.Start();
                         // disable typing while delayNewWord runs
                         allowTyping = false;
                         delayNewWord.Start();              
@@ -181,11 +217,14 @@ namespace harjoitustyo
                 // if wrong key is pressed clear word and update score
                 else
                 {
+                    PlayWrongKeyClick();
                     Debug.WriteLine("incorrect key");
                     PressedKeysStackPanel.Children.Clear();
                     keyPressIndex = 0;
                     player.DecreasePoints(5);
-                    UpdateScore();
+                    PlayerScoreTextBox.Background = new SolidColorBrush(Colors.Red);
+                    UpdateScore();               
+                    flashScore.Start();               
                 }
             }
         }
@@ -203,6 +242,15 @@ namespace harjoitustyo
             txt.Text = keyToPrint;
             txt.TextAlignment = TextAlignment.Center;           
             PressedKeysStackPanel.Children.Add(txt);
+        }
+
+        private void QuitToMainMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            stopwatch.Stop();
+            timer.Stop();
+            // remove key listener  
+            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+            this.Frame.Navigate(typeof(MainPage), player);
         }
     }
 }
