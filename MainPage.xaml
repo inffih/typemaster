@@ -187,10 +187,7 @@
             <TextBlock
                 x:Name="HowToPlayTextBlock"
                 TextWrapping="Wrap"
-                Text="
-                
-                How To Play
-                Write the word you see displayed in the center of the screen as fast as you can. Gain points from each completed word and be happy.         
+                Text="Write the word you see displayed in the center of the screen as fast as you can. Gain points from each completed word and be happy.         
                 "/>
 
         </StackPanel>
