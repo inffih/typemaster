@@ -162,15 +162,7 @@
             <TextBlock
                 x:Name="HighscoresTextBlock"
                 TextWrapping="Wrap"
-                Text="
-                
-                Highscores:
-                BOT Pheonix: 375
-                BOT Quintin: 250
-                BOT Allu: 200
-                BOT Xavier: 100
-                BOT George: 20      
-                "/>
+                Text=""/>
 
         </StackPanel>
 
