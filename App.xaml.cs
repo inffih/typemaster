@@ -23,6 +23,7 @@ namespace harjoitustyo
     /// </summary>
     sealed partial class App : Application
     {
+        internal List<Player> players = new List<Player>();
         public MediaElement gameMusic;
         public static bool musicIsRunning { get; set; }
 
@@ -48,7 +49,12 @@ namespace harjoitustyo
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
-            this.Suspending += OnSuspending;         
+            this.Suspending += OnSuspending;
+
+            players.Add(new Player { PlayerName = "BOT Phoenix", PlayerScore = 200 });
+            players.Add(new Player { PlayerName = "BOT Allu", PlayerScore = 400 });
+            players.Add(new Player { PlayerName = "BOT Quintin", PlayerScore = 320 });
+            players.Add(new Player { PlayerName = "BOT Eric", PlayerScore = 120 });
 
         }
 

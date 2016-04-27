@@ -25,6 +25,7 @@ namespace harjoitustyo
     {
         public string playerName = "Player";
         private Player player;
+        
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -32,6 +33,8 @@ namespace harjoitustyo
             if (e.Parameter is Player)
             {
                 player = (Player)e.Parameter;
+                (Application.Current as App).players.Add(player);
+                Debug.WriteLine((Application.Current as App).players.Count());
                 playerName = player.PlayerName;
                 PlayerNameTextBox.Text = player.PlayerName;
             }
@@ -49,7 +52,7 @@ namespace harjoitustyo
             if (!App.musicIsRunning == true)
             {
                 (App.Current as App).PlayGameMusic();
-            }
+            }          
         }
 
 
@@ -86,8 +89,21 @@ namespace harjoitustyo
             HowToPlayStackPanel.Visibility = Visibility.Collapsed;
             NewGameStackPanel.Visibility = Visibility.Collapsed;
             HighscoresStackPanel.Visibility = Visibility.Visible;
+            drawHighscores();
         }
 
+        private void drawHighscores()
+        {
+            (App.Current as App).players.Sort((x, y) => -1 * x.PlayerScore.CompareTo(y.PlayerScore));
+            foreach (Player plr in (App.Current as App).players)
+            {
+                TextBlock scoretxt = new TextBlock();
+                scoretxt.Text = plr.PlayerName + ": " + plr.PlayerScore;
+                HighscoresStackPanel.Children.Add(scoretxt);
+            }
+
+ 
+    }
 
         private void HowToPlayButton_Click(object sender, RoutedEventArgs e)
         {
