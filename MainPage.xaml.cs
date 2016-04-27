@@ -33,8 +33,8 @@ namespace harjoitustyo
             if (e.Parameter is Player)
             {
                 player = (Player)e.Parameter;
+                // add player to global players List
                 (Application.Current as App).players.Add(player);
-                Debug.WriteLine((Application.Current as App).players.Count());
                 playerName = player.PlayerName;
                 PlayerNameTextBox.Text = player.PlayerName;
             }
@@ -94,7 +94,9 @@ namespace harjoitustyo
 
         private void drawHighscores()
         {
+            // sort scores
             (App.Current as App).players.Sort((x, y) => -1 * x.PlayerScore.CompareTo(y.PlayerScore));
+            // loop through every player in List
             foreach (Player plr in (App.Current as App).players)
             {
                 TextBlock scoretxt = new TextBlock();
@@ -102,8 +104,7 @@ namespace harjoitustyo
                 HighscoresStackPanel.Children.Add(scoretxt);
             }
 
- 
-    }
+        }
 
         private void HowToPlayButton_Click(object sender, RoutedEventArgs e)
         {

@@ -23,6 +23,7 @@ namespace harjoitustyo
     /// </summary>
     sealed partial class App : Application
     {
+        // global list for player objects
         internal List<Player> players = new List<Player>();
         public MediaElement gameMusic;
         public static bool musicIsRunning { get; set; }
@@ -51,6 +52,7 @@ namespace harjoitustyo
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
+            // add placeholder scores
             players.Add(new Player { PlayerName = "BOT Phoenix", PlayerScore = 200 });
             players.Add(new Player { PlayerName = "BOT Allu", PlayerScore = 400 });
             players.Add(new Player { PlayerName = "BOT Quintin", PlayerScore = 320 });
