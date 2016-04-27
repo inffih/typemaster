@@ -218,7 +218,6 @@ namespace harjoitustyo
                 else
                 {
                     PlayWrongKeyClick();
-                    Debug.WriteLine("incorrect key");
                     PressedKeysStackPanel.Children.Clear();
                     keyPressIndex = 0;
                     player.DecreasePoints(5);
