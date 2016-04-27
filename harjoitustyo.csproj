@@ -93,6 +93,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="project.json" />
+    <None Include="uml.cd" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
